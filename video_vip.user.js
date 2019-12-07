@@ -2,7 +2,7 @@
 // @name              视频跳过广告和 VIP 视频解析
 // @name:en           Kill ADs and Watch VIP Videos
 // @namespace         http://mofiter.com/
-// @version           1.6
+// @version           1.6.1
 // @description       也许是风格最贴近原视频网站的 VIP 视频解析脚本了，添加的解析按钮样式跟原视频网站已有的按钮一致，不会产生突兀感，支持腾讯视频、爱奇艺、优酷、土豆、芒果 TV、搜狐视频、乐视视频、PPTV等，支持多个解析接口切换，支持自定义接口，支持站内站外解析，支持 Tampermonkey、Violentmonkey、Greasemonkey
 // @description:en    maybe it's the most similar VIP videos script to origin website
 // @author            mofiter
@@ -34,14 +34,12 @@
     var log_count = 1;
     var parseInterfaceList = [];
     var userInterfaceList = [];
-    var originalInterfaceList = [{"name":"927","type":"站内","url":"https://api.927jx.com/vip/?url="},
-                                 {"name":"ab33","type":"站内","url":"https://jx.ab33.top/vip/?url="},
-                                 {"name":"1717yun","type":"站内","url":"https://www.1717yun.com/jx/ty.php?url="},
-                                 {"name":"金桥","type":"站内","url":"https://www.jqaaa.com/jx.php?url="},
-                                 {"name":"618g","type":"站内","url":"https://jx.618g.com/?url="},
-                                 {"name":"1717yun","type":"站外","url":"https://www.1717yun.com/jx/ty.php?url="},
-                                 {"name":"m1907","type":"站外","url":"https://z1.m1907.cn/?jx="},
-                                 {"name":"beac","type":"站外","url":"https://beaacc.com/api.php?url="}];
+    var originalInterfaceList = [{"name":"解析啦","type":"站内","url":"https://api.jiexi.la/?url="},
+                                 {"name":"石头解析","type":"站内","url":"https://jiexi.071811.cc/jx.php?url="},
+                                 {"name":"乐乐云","type":"站内","url":"https://660e.com/?url="},
+                                 {"name":"简傲云","type":"站内","url":"https://vip.jaoyun.com/index.php?url="},
+                                 {"name":"985解析","type":"站外","url":"http://jx.598110.com/?url="},
+                                 {"name":"drgxj","type":"站外","url":"http://jx.drgxj.com/?url="}];
 
     //自定义 log 函数
     function mylog(param1,param2){
@@ -195,7 +193,7 @@
         var videoPlayer = $("<div id='iframe-div' style='width:100%;height:100%;z-index:2147483647;'><iframe id='iframe-player' frameborder='0' allowfullscreen='true' width='100%' height='100%'></iframe></div>");
         if (location.href.indexOf("www.iqiyi.com") > -1){
             GMaddStyle(`.fn-iqiyi-jiexi li{color:#cccccc;text-align:center;width:60px;line-height:20px;float:left;border:1px solid gray;border-radius:8px;padding:0 4px;margin:4px 2px;}`);
-            var iqiyi_jiexi = $("<div class='func-item'><span class='func-inner fn-iqiyi-jiexi-text' style='line-height:40px;'><span class='func-name'>解析</span></span>" +
+            var iqiyi_jiexi = $("<div class='func-item'><span class='func-inner fn-iqiyi-jiexi-text' style='line-height:40px;'><span class='func-name'>VIP解析</span></span>" +
                                 "<div class='qy-func-jiexi-pop fn-iqiyi-jiexi' style='display:none;position:absolute;left:-50px;text-align:center;z-index:2147483647;'><div class='qy-popup-box' style='background-color:#2e2e2e;border:1px solid gray;'>" +
                                 jiexiDIV + "</div></div></div>");
             var addButtonLoop = setInterval(()=>{
@@ -248,7 +246,7 @@
             iqiyi_jiexi.on("mouseout",()=>{
                 $(".qy-func-jiexi-pop").hide();
             });
-            var iqiyi_jiexi_new = $("<div style='float:left;color:#999;cursor:pointer;'><span class='func-name'>解析</span></div>");
+            var iqiyi_jiexi_new = $("<div style='float:left;color:#999;cursor:pointer;'><span class='func-name'>VIP解析</span></div>");
             var funcRight = $(".funcRight");
             funcRight.prepend(iqiyi_jiexi_new);
             iqiyi_jiexi_new.click(()=>{
@@ -323,7 +321,7 @@
             }
             var action_wrap = $(".action_wrap");
             GMaddStyle(`.fn-qq-jiexi li{text-align:center;width:60px;line-height:20px;float:left;border:1px solid gray;border-radius:8px;padding:0 4px;margin:4px 2px;}`);
-            var qq_jiexi = $("<div id='qq-jiexi-btn' class='action_item action_jiexi' style='position:relative;'><a class='action_title fn-qq-jiexi-text'><span>解析</span></a>" +
+            var qq_jiexi = $("<div id='qq-jiexi-btn' class='action_item action_jiexi' style='position:relative;'><a class='action_title fn-qq-jiexi-text'><span>VIP解析</span></a>" +
                              "<div class='mod_pop_action fn-qq-jiexi' style='background-color:#2e2e2e;width:auto;left:-50px;border:1px solid gray;'>" + jiexiDIV + "</div></div>");
             action_wrap.append(qq_jiexi);
             document.getElementById("qq-jiexi-btn").addEventListener("mouseover",()=>{
@@ -399,7 +397,7 @@
             },1000);
             GMaddStyle(`.fn-youku-jiexi li{color:#cccccc;text-align:center;width:60px;line-height:20px;float:left;border:1px solid gray;border-radius:8px;padding:0 4px;margin:4px 2px;}`);
             var bpmodule_playpage_paction = $("#bpmodule-playpage-paction .play-fn");
-            var youku_jiexi = $("<li class='fn-download fn-youku-jiexi'><span class='fn-title'><i class='fn-icon'></i></span><span class='text fn-youku-jiexi-text'>解析</span>" +
+            var youku_jiexi = $("<li class='fn-download fn-youku-jiexi'><span class='fn-title'><i class='fn-icon'></i></span><span class='text fn-youku-jiexi-text'>VIP解析</span>" +
                                 "<div class='fn-panel' style='background-color:#2e2e2e;min-width:100px;width:auto;border:1px solid gray;'>" + jiexiDIV + "</div></li>");
             bpmodule_playpage_paction.append(youku_jiexi);
             $(".fn-youku-jiexi-text").click(()=>{
@@ -444,7 +442,7 @@
         }else if(location.href.indexOf("www.mgtv.com") > -1){
             GMaddStyle(`.fn-mgtv-jiexi li{color:#cccccc;text-align:center;width:60px;line-height:20px;float:left;border:1px solid gray;border-radius:8px;padding:0 4px;margin:4px 2px;}`);
             var v_panel_box = $(".v-panel-box");
-            var mgtv_jiexi = $("<div class='v-panel-mod fn-mgtv-jiexi' style='cursor:pointer;'><a class='v-panel-submod fn-mgtv-jiexi-text'>解析</a>" +
+            var mgtv_jiexi = $("<div class='v-panel-mod fn-mgtv-jiexi' style='cursor:pointer;'><a class='v-panel-submod fn-mgtv-jiexi-text'>VIP解析</a>" +
                                "<div class='extend' style='top:-5px;left:-50px;text-align:center;position:relative;'><div class='v-panel-extend'><div class='fn-panel' style='background-color:#2e2e2e;width:auto;border:1px solid gray;'>" +
                                jiexiDIV + "</div></div></div></div>");
             v_panel_box.append(mgtv_jiexi);
@@ -493,7 +491,7 @@
         }else if(location.href.indexOf("tv.sohu.com") > -1){
             GMaddStyle(`.fn-sohu-jiexi li{color:#cccccc;text-align:center;width:60px;line-height:20px;float:left;border:1px solid gray;border-radius:8px;padding:0 4px;margin:4px 2px;}`);
             var vBox_right = $(".vBox-right");
-            var sohu_jiexi = $("<div class='vBox vBox-play'><a class='vbtn'>解析</a><div class='vCont fn-sohu-jiexi' style='background-color:#2e2e2e;border:1px solid gray;padding:0;width:auto;margin:0 0 0 -60px;line-height:25px;'>" + jiexiDIV + "</div></div>");
+            var sohu_jiexi = $("<div class='vBox vBox-play'><a class='vbtn'>VIP解析</a><div class='vCont fn-sohu-jiexi' style='background-color:#2e2e2e;border:1px solid gray;padding:0;width:auto;margin:0 0 0 -60px;line-height:25px;'>" + jiexiDIV + "</div></div>");
             vBox_right.prepend(sohu_jiexi);
             sohu_jiexi.click(()=>{
                 $(".fn-sohu-jiexi").toggle();
@@ -530,7 +528,7 @@
         }else if(location.href.indexOf("film.sohu.com") > -1){
             GMaddStyle(`.fn-sohu-jiexi li{color:#cccccc;text-align:center;width:60px;line-height:20px;float:left;border:1px solid gray;border-radius:8px;padding:0 4px;margin:4px 2px;}`);
             var player_content_info = $(".player-content-info");
-            var sohu_film_jiexi = $("<div class='action-item'><a class='action-title fn-sohu-jiexi-text'><span class='ico-text'>解析</span><i class='ico-down'></i></a><div class='hover-content fn-sohu-jiexi' style='background-color:#2e2e2e;border:1px solid gray;width:auto;text-align:center;margin-left:-61px;'>" +
+            var sohu_film_jiexi = $("<div class='action-item'><a class='action-title fn-sohu-jiexi-text'><span class='ico-text'>VIP解析</span><i class='ico-down'></i></a><div class='hover-content fn-sohu-jiexi' style='background-color:#2e2e2e;border:1px solid gray;width:auto;text-align:center;margin-left:-61px;'>" +
                                     jiexiDIV + "</div></div>");
             player_content_info.prepend(sohu_film_jiexi);
             sohu_film_jiexi.on("mouseover",()=>{
@@ -571,7 +569,7 @@
         }else if(location.href.indexOf("www.le.com") > -1){
             GMaddStyle(`.fn-le-jiexi li{color:#cccccc;text-align:center;width:60px;line-height:20px;float:left;border:1px solid gray;border-radius:8px;padding:0 4px;margin:4px 2px;}`);
             var interact_area = $(".interact_area");
-            var le_jiexi = $("<li><a class='fn-le-jiexi-text'><span>解析</span></a><div class='fn-le-jiexi' style='display:none;background-color:#2e2e2e;border:1px solid gray;width:auto;position:absolute;top:45px;left:-40px;border-top:2px solid #E42112;box-shadow:0 2px 6px 0 rgba(0,0,0,.1);'>" +
+            var le_jiexi = $("<li><a class='fn-le-jiexi-text'><span>VIP解析</span></a><div class='fn-le-jiexi' style='display:none;background-color:#2e2e2e;border:1px solid gray;width:auto;position:absolute;top:45px;left:-40px;border-top:2px solid #E42112;box-shadow:0 2px 6px 0 rgba(0,0,0,.1);'>" +
                              jiexiDIV + "</div></li>");
             interact_area.prepend(le_jiexi);
             le_jiexi.on("mouseover",()=>{
@@ -613,7 +611,7 @@
         }else if(location.href.indexOf("video.tudou.com") > -1){
             GMaddStyle(`.fn-tudou-jiexi li{color:#cccccc;text-align:center;width:60px;line-height:20px;float:left;border:1px solid gray;border-radius:8px;padding:0 4px;margin:4px 2px;}`);
             var td_interactbox = $(".td-interactbox__fn--right");
-            var tudou_jiexi = $("<div class='td-interactbox__fn__item'><div class='dropdown'><div class='tudou-jiexi-text' style='cursor:pointer;color:#fff;'>解析</div><div class='dropdown__panel fn-tudou-jiexi' style='border:0;text-align:center;'>" +
+            var tudou_jiexi = $("<div class='td-interactbox__fn__item'><div class='dropdown'><div class='tudou-jiexi-text' style='cursor:pointer;color:#fff;'>VIP解析</div><div class='dropdown__panel fn-tudou-jiexi' style='border:0;text-align:center;'>" +
                                 "<div style='background-color:#2e2e2e;border:1px solid gray;width:auto;position:absolute;top:10px;left:-100%;'>" + jiexiDIV + "</div></div></div></div>");
             td_interactbox.prepend(tudou_jiexi);
             tudou_jiexi.on("mouseover",()=>{
@@ -659,7 +657,7 @@
                        #fn-pptv-jiexi {display:none;position:absolute;top:50px;width:auto;text-align:center;background-color:#2e2e2e;border:1px solid gray;}
                        `);
             var module_video2016_ops = $(".module-video2016-ops ul");
-            var pptv_jiexi = $("<li id='pptv-jiexi-btn'><a class='pptv_jiexi-text' style='cursor:pointer;'><i class='ic4'></i>解析</a><div id='fn-pptv-jiexi'>" + jiexiDIV + "</div></li>");
+            var pptv_jiexi = $("<li id='pptv-jiexi-btn'><a class='pptv_jiexi-text' style='cursor:pointer;'><i class='ic4'></i>VIP解析</a><div id='fn-pptv-jiexi'>" + jiexiDIV + "</div></li>");
             module_video2016_ops.prepend(pptv_jiexi);
             document.getElementById("pptv-jiexi-btn").addEventListener("mouseover",()=>{
                 $("#fn-pptv-jiexi").show();
